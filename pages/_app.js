@@ -18,7 +18,7 @@ function MyApp({ Component, pageProps }) {
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
 
         {/* SEO  */}
-        <title>Boilerplate</title>
+        <title>EtherTask</title>
         <meta
           name="google-site-verification"
           // content="3XoSVdS7QLQWutddbE1sJ60XT3mFR-WXrP80V4AharU"
@@ -39,7 +39,7 @@ function MyApp({ Component, pageProps }) {
 
         {/* ICONS */}
         <link rel="icon" href="/favicon-196.png" />
-        <link rel="apple-touch-icon" href="/apple-icon-180.png"  />
+        <link rel="apple-touch-icon" href="/apple-icon-180.png" />
         <link
           rel="apple-touch-startup-image"
           href="/apple-splash-2048-2732.jpg"

@@ -7,9 +7,8 @@ import Context from './Context';
 import Main from './screens/Main';
 import tasksContractJSON from '../truffle/build/contracts/TasksContract.json';
 import HDWalletProvider from '@truffle/hdwallet-provider';
-
-const TruffleContract = require('@truffle/contract');
 const mnemonic = require('../truffle/secrets.json').mnemonic;
+const TruffleContract = require('@truffle/contract');
 
 const provider = new HDWalletProvider(
   mnemonic,
@@ -25,6 +24,7 @@ const App = () => {
 
   async function connectToMetamask() {
     const web3Provider = window.ethereum;
+    web3Provider.enable()
     const addresses = await web3Provider.request({ method: 'eth_requestAccounts' });
     setAddress(addresses[0]);
     console.log('ADDRESS: ', addresses[0]);
@@ -51,7 +51,6 @@ const App = () => {
     await _tasksContract.setProvider(provider);
     _tasksContract = await _tasksContract.deployed();
     await setTasksContract(_tasksContract);
-    console.log(_tasksContract);
     const taskCounter = await _tasksContract.taskCounter();
     const taskCounterNumber = await taskCounter.toNumber();
     await setTaskCounter(taskCounterNumber);

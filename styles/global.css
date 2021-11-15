@@ -1,7 +1,17 @@
-ion-button, ion-input, ion-textarea, ion-text-area {
-  /* border-radius: 50px !important; */
+ion-checkbox{
+  --size: 25px;
+}
+
+ion-button,
+ion-input,
+ion-textarea {
   width: 100% !important;
   margin-top: 15px;
+}
+
+ion-textarea,
+ion-input {
+  --padding-start: 10px !important;
 }
 
 ion-split-pane,
@@ -11,7 +21,9 @@ ion-menu {
 }
 
 ion-content {
-  --background: #0000 !important;
+
+
+  --background: none !important;
 
   background: rgb(226, 180, 109);
   background: linear-gradient(

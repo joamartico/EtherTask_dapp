@@ -1,11 +1,12 @@
 import { IonButton, IonInput, IonText, IonTextarea } from '@ionic/react';
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
-import { Context } from "../Context";
+import { Context } from '../Context';
+
 import { Padding, Row } from './StyledComponents';
+import TaskInputs from "./TaskInputs";
 
-const Sidebar = ({ display, address }) => {
-
+const Sidebar = ({ display }) => {
 
   if (display) {
     return (
@@ -33,12 +34,3 @@ const Wrapper = styled.div`
   z-index: 9999999;
 `;
 
-const InputTitle = styled(IonInput)`
-    background-color: white;
-    border-radius: 10px;
-`;
-
-const InputDescription = styled(IonTextarea)`
-    background-color: white;
-    border-radius: 10px;
-`;

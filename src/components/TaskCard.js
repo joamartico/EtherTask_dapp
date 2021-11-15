@@ -1,31 +1,32 @@
-import React from 'react';
+import { IonCheckbox, IonText } from '@ionic/react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
-import { Padding } from "./StyledComponents";
+import { Context } from '../Context';
+import { BlurCard, Padding, Row } from './StyledComponents';
 
-const TaskCard = () => {
+const TaskCard = ({ title, description, done, createdAt, id }) => {
+  const { tasksContract, address } = useContext(Context);
+
+  const onCheckboxChange = async () => {
+    console.log('NUEVA PETICION DE TRANSACCION');
+    await tasksContract.toggleDone(id, { from: address });
+  }
+
   return (
-    <Card>
+    <BlurCard>
       <Padding>
-        <h2>Title</h2>
+        <Row>
+          <Padding style={{ marginLeft: 0 }}>
+            <h2 style={{ marginBottom: -5 }}>{title}</h2>
+            <p>{description}</p>
+            <p style={{ color: '#0006' }}>{createdAt}</p>
+          </Padding>
+
+          <IonCheckbox checked={done} onClick={onCheckboxChange} />
+        </Row>
       </Padding>
-    </Card>
+    </BlurCard>
   );
 };
 
 export default TaskCard;
-
-const Card = styled.div`
-  width: 85%;
-  min-height: 80px;
-  background: #fff7;
-  backdrop-filter: blur(35px);
-  border-top: solid 1px #bab9bacc;
-  border-radius: 10px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 20px;
-  display: flex;
-
-`;
-
-

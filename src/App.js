@@ -59,8 +59,7 @@ const App = () => {
 
   useEffect(() => {
     if (window.ethereum) {
-      // connectToMetamask();
-      connectToWalletconnect();
+      connectToMetamask();
     } else {
       connectToWalletconnect();
     }

@@ -8,9 +8,11 @@ const TaskCard = ({ title, description, done, createdAt, id }) => {
   const { tasksContract, address } = useContext(Context);
 
   const onCheckboxChange = async () => {
-    console.log('NUEVA PETICION DE TRANSACCION');
-    await tasksContract.toggleDone(id, { from: address });
-  }
+    await tasksContract.toggleDone(id, {
+      // from: address
+      from: '0x03D0D6e53185D81FEA0F7a5AaD250407be197e44',
+    });
+  };
 
   return (
     <BlurCard>

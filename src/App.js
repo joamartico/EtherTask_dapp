@@ -80,7 +80,7 @@ const App = () => {
         <IonApp>
           <IonReactRouter>
             <IonRouterOutlet id="main">
-              <Route path="/" render={() => taskCounter ? <Main /> : <p>Loading...</p>} />
+              <Route path="/" render={() => tasksContract ? <Main /> : <p>Loading...</p>} />
             </IonRouterOutlet>
           </IonReactRouter>
         </IonApp>

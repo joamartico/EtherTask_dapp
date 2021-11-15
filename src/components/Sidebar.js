@@ -13,14 +13,7 @@ const Sidebar = ({ display, address }) => {
         <Padding>
           <h1>EtherTask</h1>
 
-          <p>
-            <b>Your Wallet: </b> {address}
-          </p>
-
-          <h2 style={{marginTop: 60}}>Create a Task</h2>
-          <InputTitle  placeholder="Type the Task Name..." />
-          <InputDescription placeholder="Type the Task Description..." rows={8} autoGrow={true}/>
-          <IonButton strong mode="ios">Create</IonButton>
+          <TaskInputs />
         </Padding>
       </Wrapper>
     );

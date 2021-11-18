@@ -51,7 +51,8 @@ const App = () => {
     await console.log('ADDRESS moralis: ', addresses[0]);
 
     await setAddress(addresses[0]);
-    const web3 = await new Moralis.Web3(Moralis.web3.givenProvider);
+    await console.log("------------------------------ETH GIVEN PROVIDER: ", Moralis.web3.eth.givenProvider)
+    const web3 = await new Moralis.Web3(Moralis.web3.eth.givenProvider);
     const TasksContract = await new web3.eth.Contract(
       tasksContractJSON.abi,
       '0xb17A006e020e6e87A68cB660816AaC6A2B2B6935'

@@ -47,9 +47,10 @@ const App = () => {
       });
     }
     await enableWeb3({ provider: 'walletconnect' });
-    await console.log("ADDRESS moralis: ", Moralis.web3.givenProvider.selectedAddress)
+    const addresses = await Moralis.web3.eth.getAccounts();
+    await console.log('ADDRESS moralis: ', addresses[0]);
 
-    await setAddress(Moralis.web3.givenProvider.selectedAddress);
+    await setAddress(addresses[0]);
     const web3 = await new Moralis.Web3(Moralis.web3.givenProvider);
     const TasksContract = await new web3.eth.Contract(
       tasksContractJSON.abi,

@@ -76,7 +76,46 @@ module.exports = {
           mnemonic,
           'https://speedy-nodes-nyc.moralis.io/73323dda20b1c4a5c3605eb4/eth/kovan'
         ),
-      network_id: 42, // Ropsten's id
+      network_id: 42, // Kovan's id
+      gas: 5500000, // Ropsten has a lower block limit than mainnet
+      confirmations: 2, // # of confs to wait between deployments. (default: 0)
+      networkCheckTimeout: 1000000,
+      timeoutBlocks: 200, // # of blocks before a deployment times out  (minimum/default: 50)
+      skipDryRun: true, // Skip dry run before migrations? (default: false for public nets )
+    },
+    rinkeby: {
+      provider: () =>
+        new HDWalletProvider(
+          mnemonic,
+          'https://speedy-nodes-nyc.moralis.io/73323dda20b1c4a5c3605eb4/eth/rinkeby'
+        ),
+      network_id: 4, // Rinkeby's id
+      gas: 5500000, // Ropsten has a lower block limit than mainnet
+      confirmations: 2, // # of confs to wait between deployments. (default: 0)
+      networkCheckTimeout: 1000000,
+      timeoutBlocks: 200, // # of blocks before a deployment times out  (minimum/default: 50)
+      skipDryRun: true, // Skip dry run before migrations? (default: false for public nets )
+    },
+    goerli: {
+      provider: () =>
+        new HDWalletProvider(
+          mnemonic,
+          'https://speedy-nodes-nyc.moralis.io/73323dda20b1c4a5c3605eb4/eth/goerli'
+        ),
+      network_id: 5, // Goerli's id
+      gas: 5500000, // Ropsten has a lower block limit than mainnet
+      confirmations: 2, // # of confs to wait between deployments. (default: 0)
+      networkCheckTimeout: 1000000,
+      timeoutBlocks: 200, // # of blocks before a deployment times out  (minimum/default: 50)
+      skipDryRun: true, // Skip dry run before migrations? (default: false for public nets )
+    },
+    mumbai: {
+      provider: () =>
+        new HDWalletProvider(
+          mnemonic,
+          'https://speedy-nodes-nyc.moralis.io/73323dda20b1c4a5c3605eb4/polygon/mumbai'
+        ),
+      network_id: 80001, // Polygon Mumbai's id
       gas: 5500000, // Ropsten has a lower block limit than mainnet
       confirmations: 2, // # of confs to wait between deployments. (default: 0)
       networkCheckTimeout: 1000000,

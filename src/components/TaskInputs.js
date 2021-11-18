@@ -14,8 +14,10 @@ import styled from 'styled-components';
 import { Context } from '../Context';
 import { Row } from './StyledComponents';
 import { useMoralis } from 'react-moralis';
+import { shortenAddress } from "../helpers/shortenAddress";
 
 function PopoverList({ onLogout }) {
+  
   return (
     <>
       <IonItem button detail={false}>
@@ -30,14 +32,17 @@ function PopoverList({ onLogout }) {
 
 const TaskInputs = ({ mobile }) => {
   const { logout } = useMoralis();
-
-  const [present, dismiss] = useIonPopover(PopoverList, { onLogout: logout });
+  const { address, setAddress, tasksContract, tasks, taskCounter, setTaskCounter } = useContext(Context);
   const [taskTitle, setTaskTitle] = useState();
   const [taskDescription, setTaskDescription] = useState();
-  const { address, tasksContract, tasks, taskCounter, setTaskCounter } = useContext(Context);
 
-  const shortAddress =
-    address && address.substring(0, 6) + '...' + address.substring(address.length - 4);
+  const [present, dismiss] = useIonPopover(PopoverList, { onLogout: () => {
+    logout() 
+    setAddress("")
+  }});
+
+
+  const shortAddress = address && address.substring(0, 2) + (address.substring(2, 6) + '...' + address.substring(address.length - 4)).toUpperCase();
 
   async function createTask() {
     tasksContract.methods

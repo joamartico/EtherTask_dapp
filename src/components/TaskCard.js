@@ -8,10 +8,7 @@ const TaskCard = ({ title, description, done, createdAt, id }) => {
   const { tasksContract, address } = useContext(Context);
 
   const onCheckboxChange = async () => {
-    await tasksContract.toggleDone(id, {
-      // from: address
-      from: '0x03D0D6e53185D81FEA0F7a5AaD250407be197e44',
-    });
+    await tasksContract.methods.toggleDone(id).send({ from: address });
   };
 
   return (

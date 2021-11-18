@@ -34,23 +34,21 @@ const TaskInputs = ({ mobile }) => {
   const [present, dismiss] = useIonPopover(PopoverList, { onLogout: logout });
   const [taskTitle, setTaskTitle] = useState();
   const [taskDescription, setTaskDescription] = useState();
-  const { address, tasksContract, tasks, taskCounter, setTaskCounter } = useContext(
-    Context
-  );
+  const { address, tasksContract, tasks, taskCounter, setTaskCounter } = useContext(Context);
 
   const shortAddress =
     address && address.substring(0, 6) + '...' + address.substring(address.length - 4);
 
   async function createTask() {
-    await tasksContract.createTask(taskTitle, taskDescription, {
-      // from: address,
-      from: "0x03D0D6e53185D81FEA0F7a5AaD250407be197e44",
-    });
-    await setTaskCounter(taskCounter + 1);
-    setTaskTitle('');
-    setTaskDescription('');
+    tasksContract.methods
+      .createTask(taskTitle, taskDescription)
+      .send({ from: address })
+      .then(async () => {
+        await setTaskCounter(taskCounter + 1);
+        setTaskTitle('');
+        setTaskDescription('');
+      });
   }
-
 
   return (
     <>
@@ -85,7 +83,7 @@ const TaskInputs = ({ mobile }) => {
         autoGrow={true}
         value={taskDescription}
       />
-      <IonButton strong mode="ios" onClick={createTask}>
+      <IonButton strong mode="ios" onClick={ () => createTask()}>
         Create
       </IonButton>
     </>

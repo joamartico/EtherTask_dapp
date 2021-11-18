@@ -33,21 +33,23 @@ const Main = () => {
   async function getTasks() {
     const _tasks = [];
 
-    for (let i = 1; i <= taskCounter; i++) {
-      const task = await tasksContract.tasks(i);
+    console.log('TASKCOUNTER: ', taskCounter);
 
-      console.log('task[1]: ', task[1]);
+
+    for (let i = 1; i <= taskCounter; i++) {
+      const task = await tasksContract.methods.tasks(i).call();
 
       const newTask = await {
-        id: task[0].toNumber(),
-        title: task[1],
-        description: task[2],
-        done: task[3],
-        createdAt: new Date(task[4].toNumber() * 1000).toLocaleString(),
+        id: task.id,
+        title: task.title,
+        description: task.description,
+        done: task.done,
+        createdAt: new Date(task.createdAt * 1000).toLocaleString(),
       };
 
       _tasks[i - 1] = newTask;
     }
+
     setTasks(_tasks.reverse());
   }
 

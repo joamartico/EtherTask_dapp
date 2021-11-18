@@ -52,7 +52,8 @@ const TaskInputs = ({ mobile }) => {
         await setTaskCounter(taskCounter + 1);
         setTaskTitle('');
         setTaskDescription('');
-      });
+
+      }).catch(err => alert(err));
   }
 
   return (

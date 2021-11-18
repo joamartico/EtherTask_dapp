@@ -60,7 +60,7 @@ const App = () => {
     TasksContract.methods
       .taskCounter()
       .call()
-      .then(res => setTaskCounter(parseInt(res)));
+      .then(res => setTaskCounter(parseInt(res))).catch(err => alert(err));
   }
 
   useEffect(() => {

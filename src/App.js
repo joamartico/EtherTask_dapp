@@ -42,7 +42,8 @@ const App = () => {
     if (!isAuthenticated) {
       await authenticate({
         provider: 'walletconnect',
-        chainId: 42, // Kovan
+        chainId: 3,  // Ropsten
+        // chainId: 42, // Kovan
         signingMessage: 'Welcome! ',
       });
     }
@@ -51,9 +52,9 @@ const App = () => {
     await console.log('ADDRESS moralis: ', addresses[0]);
 
     await setAddress(addresses[0]);
-    await console.log("------------------------------ETH GIVEN PROVIDER: ", Moralis.web3.eth.givenProvider)
-    const web3 = await new Moralis.Web3(Moralis.web3.eth.givenProvider);
-    const TasksContract = await new web3.eth.Contract(
+    await console.log("------------------------------ETH GIVEN PROVIDER: ", Moralis.web3.givenProvider)
+    const web3 = await new Moralis.Web3(Moralis.web3.givenProvider);
+    const TasksContract = await new Moralis.web3.eth.Contract(
       tasksContractJSON.abi,
       '0xb17A006e020e6e87A68cB660816AaC6A2B2B6935'
     );
@@ -87,6 +88,7 @@ const App = () => {
     <Context
       value={{
         address,
+        setAddress,
         tasksContract,
         taskCounter,
         setTaskCounter,

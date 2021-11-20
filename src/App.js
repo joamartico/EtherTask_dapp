@@ -22,10 +22,11 @@ const App = () => {
     setAddress(addresses[0]);
     const web3 = await new Moralis.Web3(window.ethereum);
     const networkId = await web3.eth.net.getId();
-    const networkData = tasksContractJSON.networks[networkId];
+    const networkData = await tasksContractJSON.networks[networkId];
 
     if (networkData) {
       const TasksContract = new web3.eth.Contract(tasksContractJSON.abi, networkData.address);
+      console.log("!!!!!!!!!!!!!!!!!! CONTRADO DE LA NETWORK: ", networkData.address)
       setTasksContract(TasksContract);
       TasksContract.methods
         .taskCounter()
@@ -52,11 +53,13 @@ const App = () => {
     await console.log('ADDRESS moralis: ', addresses[0]);
 
     await setAddress(addresses[0]);
-    await console.log("------------------------------ETH GIVEN PROVIDER: ", Moralis.web3.givenProvider)
-    const web3 = await new Moralis.Web3(Moralis.web3.givenProvider);
+
+
+    // const web3 = await new Moralis.Web3(Moralis.web3.givenProvider)
+    
     const TasksContract = await new Moralis.web3.eth.Contract(
       tasksContractJSON.abi,
-      '0xb17A006e020e6e87A68cB660816AaC6A2B2B6935'
+      '0x75A9d494e24545CC31CE887FdC31Ea210Edcb559'
     );
     await setTasksContract(TasksContract);
     TasksContract.methods
@@ -69,8 +72,8 @@ const App = () => {
     const web3Provider = window.ethereum;
 
     if (web3Provider) {
-      // connectToMetamask();
-      connectToWalletconnect();
+      connectToMetamask();
+      // connectToWalletconnect();
 
       web3Provider.on('accountsChanged', async new_addresses => {
         connectToMetamask();

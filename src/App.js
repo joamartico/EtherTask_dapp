@@ -6,9 +6,7 @@ import { Redirect, Route } from 'react-router-dom';
 import Context from './Context';
 import Main from './screens/Main';
 import tasksContractJSON from '../truffle/build/contracts/TasksContract.json';
-import HDWalletProvider from '@truffle/hdwallet-provider';
-const mnemonic = require('../truffle/secrets.json').mnemonic;
-const TruffleContract = require('@truffle/contract');
+
 
 const App = () => {
   const [address, setAddress] = useState();
@@ -17,15 +15,35 @@ const App = () => {
 
   const { authenticate, user, enableWeb3, Moralis, isAuthenticated } = useMoralis();
 
-  async function connectToMetamask() {
+  async function connectToBrowserWallet() {
     const addresses = await window.ethereum.request({ method: 'eth_requestAccounts' });
     setAddress(addresses[0]);
     const web3 = await new Moralis.Web3(window.ethereum);
-    const networkId = await web3.eth.net.getId();
+    loadContracts(web3);
+  }
+
+  async function connectToWalletconnect() {
+    if (!isAuthenticated) {
+      await authenticate({
+        provider: 'walletconnect',
+        chainId: 42, // Kovan
+        signingMessage: 'Welcome! ',
+      });
+    }
+    await enableWeb3({ provider: 'walletconnect' });
+    const addresses = await Moralis.web3.eth.getAccounts();
+    await setAddress(addresses[0]);
+    
+    loadContracts(Moralis.web3);
+  }
+
+
+  async function loadContracts(web3Provider) {
+    const networkId = await web3Provider.eth.net.getId();
     const networkData = await tasksContractJSON.networks[networkId];
 
     if (networkData) {
-      const TasksContract = new web3.eth.Contract(tasksContractJSON.abi, networkData.address);
+      const TasksContract = new web3Provider.eth.Contract(tasksContractJSON.abi, networkData.address);
 
       setTasksContract(TasksContract);
       TasksContract.methods
@@ -37,51 +55,18 @@ const App = () => {
     }
   }
 
-  async function connectToWalletconnect() {
-    console.log('USER: ', user);
-
-    if (!isAuthenticated) {
-      await authenticate({
-        provider: 'walletconnect',
-        chainId: 3,  // Ropsten
-        // chainId: 42, // Kovan
-        signingMessage: 'Welcome! ',
-      });
-    }
-    await enableWeb3({ provider: 'walletconnect' });
-    const addresses = await Moralis.web3.eth.getAccounts();
-    await console.log('ADDRESS moralis: ', addresses[0]);
-    alert("NETWORK: ", Moralis.web3.eth.net.getId());
-
-    await setAddress(addresses[0]);
-
-
-    // const web3 = await new Moralis.Web3(Moralis.web3.givenProvider)
-    
-    const TasksContract = await new Moralis.web3.eth.Contract(
-      tasksContractJSON.abi,
-      '0x75A9d494e24545CC31CE887FdC31Ea210Edcb559'
-    );
-    await setTasksContract(TasksContract);
-    TasksContract.methods
-      .taskCounter()
-      .call()
-      .then(res => setTaskCounter(parseInt(res))).catch(err => alert(err));
-  }
-
   useEffect(() => {
-    const web3Provider = window.ethereum;
+    const browserWallet = window.ethereum;
 
-    if (web3Provider) {
-      connectToMetamask();
-      // connectToWalletconnect();
+    if (browserWallet) {
+      connectToBrowserWallet();
 
-      web3Provider.on('accountsChanged', async new_addresses => {
-        connectToMetamask();
+      browserWallet.on('accountsChanged', async new_addresses => {
+        connectToBrowserWallet();
       });
 
-      web3Provider.on('chainChanged', async new_chainId => {
-        connectToMetamask();
+      browserWallet.on('chainChanged', async new_chainId => {
+        connectToBrowserWallet();
       });
     } else {
       connectToWalletconnect();

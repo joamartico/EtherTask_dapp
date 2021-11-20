@@ -26,7 +26,7 @@ const App = () => {
 
     if (networkData) {
       const TasksContract = new web3.eth.Contract(tasksContractJSON.abi, networkData.address);
-      console.log("!!!!!!!!!!!!!!!!!! CONTRADO DE LA NETWORK: ", networkData.address)
+
       setTasksContract(TasksContract);
       TasksContract.methods
         .taskCounter()
@@ -51,6 +51,7 @@ const App = () => {
     await enableWeb3({ provider: 'walletconnect' });
     const addresses = await Moralis.web3.eth.getAccounts();
     await console.log('ADDRESS moralis: ', addresses[0]);
+    alert("NETWORK: ", Moralis.web3.eth.net.getId());
 
     await setAddress(addresses[0]);
 

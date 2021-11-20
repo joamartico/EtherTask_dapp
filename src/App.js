@@ -34,19 +34,21 @@ const App = () => {
     const addresses = await Moralis.web3.eth.getAccounts();
     await setAddress(addresses[0]);
     
-    loadContracts(Moralis.web3);
+    await loadContracts(Moralis.web3);
   }
 
 
   async function loadContracts(web3Provider) {
     const networkId = await web3Provider.eth.net.getId();
     const networkData = await tasksContractJSON.networks[networkId];
+    await alert(networkId)
+
 
     if (networkData) {
-      const TasksContract = new web3Provider.eth.Contract(tasksContractJSON.abi, networkData.address);
+      const TasksContract = await new web3Provider.eth.Contract(tasksContractJSON.abi, "0xb17A006e020e6e87A68cB660816AaC6A2B2B6935");
 
-      setTasksContract(TasksContract);
-      TasksContract.methods
+      await setTasksContract(TasksContract);
+      await TasksContract.methods
         .taskCounter()
         .call()
         .then(res => setTaskCounter(parseInt(res)));
@@ -60,6 +62,8 @@ const App = () => {
 
     if (browserWallet) {
       connectToBrowserWallet();
+      // connectToWalletconnect();
+
 
       browserWallet.on('accountsChanged', async new_addresses => {
         connectToBrowserWallet();

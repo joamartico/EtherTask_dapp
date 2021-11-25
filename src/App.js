@@ -41,17 +41,20 @@ const App = () => {
   async function loadContracts(web3Provider) {
     const networkId = await web3Provider.eth.net.getId();
     const networkData = await tasksContractJSON.networks[networkId];
-    await alert(networkId)
-
-
+    await alert(networkData.address)
+    
+    
     if (networkData) {
-      const TasksContract = await new web3Provider.eth.Contract(tasksContractJSON.abi, "0xb17A006e020e6e87A68cB660816AaC6A2B2B6935");
+      const TasksContract = await new web3Provider.eth.Contract(tasksContractJSON.abi, networkData.address);
 
       await setTasksContract(TasksContract);
       await TasksContract.methods
         .taskCounter()
         .call()
-        .then(res => setTaskCounter(parseInt(res)));
+        .then(res => {
+          setTaskCounter(parseInt(res))
+          alert("taskCounter: ", res)
+        });
     } else {
       alert('The network you choose with ID: ' + networkId + ' is not available for this dapp');
     }

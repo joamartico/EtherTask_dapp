@@ -49,10 +49,10 @@ const TaskInputs = ({ mobile }) => {
       .createTask(taskTitle, taskDescription)
       .send({ from: address })
       .then(async () => {
+        alert("se pudo")
         await setTaskCounter(taskCounter + 1);
         setTaskTitle('');
         setTaskDescription('');
-        console.log(tasksContract)
 
       }).catch(err => alert(err));
   }

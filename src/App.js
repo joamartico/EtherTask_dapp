@@ -27,7 +27,8 @@ const App = () => {
       await authenticate({
         provider: 'walletconnect',
         // chainId: 42, // Kovan
-        chainId: 3, // Ropsten
+        // chainId: 3, // Ropsten
+        chainId: 5, // Goerli
         signingMessage: 'Welcome! ',
       });
     }
@@ -42,7 +43,6 @@ const App = () => {
   async function loadContracts(web3Provider) {
     const networkId = await web3Provider.eth.net.getId();
     const networkData = await tasksContractJSON.networks[networkId];
-    await alert(networkData.address)
     
     
     if (networkData) {
@@ -54,7 +54,6 @@ const App = () => {
         .call()
         .then(res => {
           setTaskCounter(parseInt(res))
-          alert("taskCounter: ", res)
         });
     } else {
       alert('The network you choose with ID: ' + networkId + ' is not available for this dapp');

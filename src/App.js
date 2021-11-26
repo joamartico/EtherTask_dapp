@@ -26,7 +26,8 @@ const App = () => {
     if (!isAuthenticated) {
       await authenticate({
         provider: 'walletconnect',
-        chainId: 42, // Kovan
+        // chainId: 42, // Kovan
+        chainId: 3, // Ropsten
         signingMessage: 'Welcome! ',
       });
     }

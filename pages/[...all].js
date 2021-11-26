@@ -8,8 +8,8 @@ const App = dynamic(() => import('../src/App'), {
 export default function Index() {
   return (
     <MoralisProvider
-      appId="wETJZsZFm7KBKNoZzEzSCX2qomc4eUtKKCiCogSe"
-      serverUrl="https://xme422kthgzm.usemoralis.com:2053/server"
+      appId="yFo3Pl7utxrIYzpdH8Xh3J3arRiG4QfTu598QQMh"
+      serverUrl="https://r5aswjxrqelg.usemoralis.com:2053/server"
     >
       <App />
     </MoralisProvider>
